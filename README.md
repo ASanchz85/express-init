@@ -1,0 +1,36 @@
+# Bash Script - Backend Project
+
+That is a simple script in bash for setting up a backend nodejs and express folders in a fast way
+
+Do not forget to give it execution permissions with chmod +x
+
+~~~
+chmod +x setup.sh
+~~~
+
+After doing so, you can create an alias or add it to your binaries for easing execution from any folder
+
+~~~
+sudo mv setup.sh /usr/local/bin/setup
+~~~
+
+
+*For execution you should change the name my-app for the name of your application or project*
+
+~~~
+setup my-app
+~~~
+
+*In case, you prefer to set an alias (change .bashrc to .zshrc in case your terminal is a ZSH)*
+
+~~~
+nano ~/.bashrc
+~~~
+
+~~~
+alias setup="/path/to/setup.sh"
+~~~
+
+~~~
+source ~/.bashrc
+~~~
