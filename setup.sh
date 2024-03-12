@@ -40,7 +40,7 @@ cp ~/scripts/template_package.json ./package.json
 sed -i 's/"name": "server"/"name": "'"$1"'-server"/' package.json
 
 # Install dependencies
-npm i -E express dotenv cors helmet
+npm i -E express dotenv cors helmet jsonwebtoken bcryptjs cookie-parser
 npm i -DE nodemon morgan standard
 
 # Prompt for installing mongoose
