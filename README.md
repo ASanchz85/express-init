@@ -22,6 +22,7 @@ setup my-app
 ~~~
 
 *In case, you prefer to set an alias (change .bashrc to .zshrc in case your terminal is a ZSH)*
+**Be aware that /path/to/ need to be modified according to your local routes and preferences**
 
 ~~~
 nano ~/.bashrc
