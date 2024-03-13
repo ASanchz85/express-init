@@ -66,7 +66,7 @@ else
 fi
 
 # Update package.json with the new name
-sed -i 's/"name": "server"/"name": "'"$1"'-server"/' package.json
+sed -i 's/"name": "server"/"name": "@server\/'"$1"'"/' package.json
 
 # Install dependencies
 npm i -E express dotenv cors helmet jsonwebtoken bcryptjs cookie-parser
@@ -87,6 +87,27 @@ if [ ! -z "$install_mongoose" ] && [[ ! $install_mongoose =~ ^[Yy]$ ]]; then
     mkdir config models
   fi
 fi
+
+# Prompt for choosing between CommonJS and ES modules
+read -r -p "Do you want to use CommonJS (1/cjs) or ES modules (2/esm)? " module_choice
+
+# Check the user's choice and update package.json accordingly
+case "$module_choice" in
+    1|cjs)
+        sed -i 's/"type": "module"/"type": "commonjs"/' package.json
+        ;;
+    2|esm)
+        sed -i 's/"type": "commonjs"/"type": "module"/' package.json
+        ;;
+    *)
+        echo "Error: Invalid choice. Please choose either '1' or 'cjs' for CommonJS, or '2' or 'esm' for ES modules."
+        exit 1
+        ;;
+esac
+
+# Creating a simple README.md file
+echo '# '"$1" > README.md
+echo 'type *npm run dev* for starting the developing mode' >> README.md
 
 # Display success message
 echo "Setup completed successfully!"
