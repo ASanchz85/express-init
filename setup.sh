@@ -1,8 +1,12 @@
 #!/bin/bash
 
+# Save the current directory
+current_dir=$(pwd)
+script_dir=$(dirname "$0")
+
 # Check if a parameter is provided
 if [ -z "$1" ]; then
-  echo "Error: Please provide a name for the mail folder."
+  echo "Error: Please provide a name for the main folder."
   exit 1
 fi
 
@@ -26,15 +30,40 @@ cd "$1" || exit
 npm init -y
 git init
 
-# Create .gitignore file
-echo "/node_modules" > .gitignore
-echo ".env" >> .gitignore
-
 # Create .env file
 touch .env
 
-# Copy package.json template
-cp ~/scripts/template_package.json ./package.json
+# Navigate to the directory where the script resides
+cd "$script_dir" || exit
+
+# Search for the template_gitignore file recursively starting from the current directory
+template_gitignore_path=$(find . -type f -name "template_gitignore" -print -quit)
+
+# Check if the template_gitignore file was found
+if [ -n "$template_gitignore_path" ]; then
+    # Copy the template_gitignore file to the current directory
+    cd "$current_dir" || exit
+    cd "$1" || exit
+    cp "$script_dir/$template_gitignore_path" ./.gitignore
+else
+    echo "Error: template_gitignore file not found."
+fi
+
+# Navigate to the directory where the script resides
+cd "$(dirname "$0")" || exit
+
+# Search for the template_package.json file recursively starting from the current directory
+template_package_json_path=$(find . -type f -name "template_package.json" -print -quit)
+
+# Check if the template_package.json file was found
+if [ -n "$template_package_json_path" ]; then
+    # Copy the template_package.json file to the current directory
+    cd "$current_dir" || exit
+    cd "$1" || exit
+    cp "$script_dir/$template_package_json_path" ./package.json
+else
+    echo "Error: template_package.json file not found."
+fi
 
 # Update package.json with the new name
 sed -i 's/"name": "server"/"name": "'"$1"'-server"/' package.json
