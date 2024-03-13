@@ -76,7 +76,8 @@ npm i -DE nodemon morgan standard
 read -r -p "Do you want to install mongoose? (y/n): " install_mongoose
 if [[ $install_mongoose =~ ^[Yy]$ ]]; then
   npm i -E mongoose
-  mkdir config models
+  mkdir db
+  mkdir db/config db/models
 fi
 
 # Prompt for installing prisma if mongoose is not installed
@@ -84,7 +85,8 @@ if [ ! -z "$install_mongoose" ] && [[ ! $install_mongoose =~ ^[Yy]$ ]]; then
   read -r -p "Do you want to install prisma? (y/n): " install_prisma
   if [[ $install_prisma =~ ^[Yy]$ ]]; then
     npm i -E prisma
-    mkdir config models
+    mkdir db
+    mkdir db/config db/models
   fi
 fi
 
