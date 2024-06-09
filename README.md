@@ -29,8 +29,10 @@ nano ~/.bashrc
 ~~~
 
 ~~~
-alias setup="/path/to/setup.sh"
+alias setup="~/path/to/setup.sh"
 ~~~
+
+*You can rename setup alias for the one more convenient to you.*
 
 ~~~
 source ~/.bashrc
