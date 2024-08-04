@@ -72,6 +72,25 @@ sed -i 's/"name": "server"/"name": "@server\/'"$1"'"/' package.json
 npm i -E express dotenv cors helmet jsonwebtoken bcryptjs cookie-parser
 npm i -DE nodemon morgan standard
 
+# Prompt for installing eslint
+read -r -p "Do you want to install eslint? (y/n): " install_eslint
+if [[ $install_eslint =~ ^[Yy]$ ]]; then
+  npm i -DE eslint eslint-config-standard eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-standard
+
+  # Search for the template_eslintrc.json file recursively starting from the current directory
+  template_eslintrc_json_path=$(find . -type f -name "template_eslintrc.json" -print -quit)
+
+  # Check if the template_eslintrc.json file was found
+  if [ -n "$template_eslintrc_json_path" ]; then
+      # Copy the template_eslintrc.json file to the current directory
+      cd "$current_dir" || exit
+      cd "$1" || exit
+      cp "$script_dir/$template_eslintrc_json_path" ./.eslintrc.json
+  else
+      echo "Error: template_eslintrc.json file not found."
+  fi
+fi
+
 # Prompt for installing mongoose
 read -r -p "Do you want to install mongoose? (y/n): " install_mongoose
 if [[ $install_mongoose =~ ^[Yy]$ ]]; then
@@ -93,13 +112,15 @@ fi
 # Prompt for choosing between CommonJS and ES modules
 read -r -p "Do you want to use CommonJS (1/cjs) or ES modules (2/esm)? " module_choice
 
-# Check the user's choice and update package.json accordingly
+# Check the user's choice and update package.json and .eslintrc.json accordingly
 case "$module_choice" in
     1|cjs)
         sed -i 's/"type": "module"/"type": "commonjs"/' package.json
+        sed -i 's/"sourceType": "module"/"sourceType": "commonjs"/' .eslintrc.json
         ;;
     2|esm)
         sed -i 's/"type": "commonjs"/"type": "module"/' package.json
+        sed -i 's/"sourceType": "commonjs"/"sourceType": "module"/' .eslintrc.json
         ;;
     *)
         echo "Error: Invalid choice. Please choose either '1' or 'cjs' for CommonJS, or '2' or 'esm' for ES modules."

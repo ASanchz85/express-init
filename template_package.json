@@ -11,8 +11,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "eslintConfig": {
-    "extends": "./node_modules/standard/eslintrc.json"
-  }
+  "license": "ISC"
 }
