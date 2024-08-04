@@ -31,7 +31,7 @@ npm init -y
 git init
 
 # Create .env file
-touch .env
+echo "BASE_URL=http://localhost\nPORT=3000" > .env
 
 # Navigate to the directory where the script resides
 cd "$script_dir" || exit
@@ -91,12 +91,21 @@ if [[ $install_eslint =~ ^[Yy]$ ]]; then
   fi
 fi
 
+# Prompt for installing swagger
+read -r -p "Do you want to install swagger? (y/n): " install_swagger
+if [[ $install_swagger =~ ^[Yy]$ ]]; then
+  npm i -E swagger-jsdoc swagger-ui-express
+  mkdir config
+  mkdir models
+  touch config/swagger.js
+fi
+
 # Prompt for installing mongoose
 read -r -p "Do you want to install mongoose? (y/n): " install_mongoose
 if [[ $install_mongoose =~ ^[Yy]$ ]]; then
   npm i -E mongoose
-  mkdir db
-  mkdir db/config db/models
+  mkdir config
+  mkdir models
 fi
 
 # Prompt for installing prisma if mongoose is not installed
@@ -104,8 +113,8 @@ if [ ! -z "$install_mongoose" ] && [[ ! $install_mongoose =~ ^[Yy]$ ]]; then
   read -r -p "Do you want to install prisma? (y/n): " install_prisma
   if [[ $install_prisma =~ ^[Yy]$ ]]; then
     npm i -E prisma
-    mkdir db
-    mkdir db/config db/models
+  mkdir config
+  mkdir models
   fi
 fi
 
