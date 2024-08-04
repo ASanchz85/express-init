@@ -69,7 +69,7 @@ fi
 sed -i 's/"name": "server"/"name": "@server\/'"$1"'"/' package.json
 
 # Install dependencies
-npm i -E express dotenv cors helmet jsonwebtoken bcryptjs cookie-parser
+npm i -E express dotenv cors helmet jsonwebtoken bcryptjs cookie-parser body-parser
 npm i -DE nodemon morgan standard
 
 # Prompt for installing eslint
