@@ -2,6 +2,12 @@
 
 That is a simple script in bash for setting up a backend nodejs and express folders in a fast way
 
+## While installing it, you will be prompted to decide which dependencies you'd like to use for your project. Including:
+
+-  Eslint
+-  Modules or commonJS
+-  ORMs: Mongoose (noSQL) / Prisma (SQL) 
+
 Do not forget to give it execution permissions with chmod +x
 
 ~~~
